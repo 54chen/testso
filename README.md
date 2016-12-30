@@ -1,0 +1,2 @@
+# testso
+test .so extend
