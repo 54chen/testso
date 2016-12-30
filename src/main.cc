@@ -1,36 +1,31 @@
 /**********
  *  main  *
  **********/
-
+#include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
 #include <dlfcn.h>
 #include "main.h"
 
-typedef struct {
- const char *module;
- int (*GetValue)(char *pszVal);
- int (*PrintfHello)();
-} so_API;
-
-
+using namespace std;
 
 int main(int argc, char *argv[]) {
-  std::cout << "I am in main!" << std::endl;
-  call_process(2); 
+  //std::cout << "I am in main!" << std::endl;
+  //call_process(2); 
 
   //dlopen model:
-  std::string so = "so/libtest.so";
+  std::string so = "/home/cz/testso/libtest.so";
   void *so_obj = dlopen((char*)so.c_str(),RTLD_LAZY);
   if (so_obj == NULL) {
       std::cout << "so is not exist!" << std::endl;
   }
 
-  FunPtr func = (FunPtr)dlsym(so_obj, "call_process");
+  void (*call_process)(int);
+  call_process  = (void(*)(int))dlsym(so_obj, "call_process");
 
-  if (func != NULL) {
-      (*func)(3);
+  if (call_process != NULL) {
+      std::cout << "it is work!" << std::endl;
+      (call_process)(1);
   }
-
   return 0;
 }

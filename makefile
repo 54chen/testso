@@ -9,7 +9,8 @@ SRC_OBJECTS = $(patsubst %.cc, %.o, $(notdir $(wildcard $(SRC_DIR)*.cc)))
 
 INC =  -I ../src/
 
-C_FLAGS = -g -fPIC -O2  -Wall -std=c++0x -ltest -Lso
+C_FLAGS = -g -fPIC -O2  -Wall -std=c++0x -ldl -Wl,-rpath . 
+# -ltest -Lso
 
 all: clean $(LIB_TARGET) 
 
